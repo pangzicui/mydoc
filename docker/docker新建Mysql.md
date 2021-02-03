@@ -2,7 +2,7 @@
 ##下载镜像
 docker pull mysql
 ##启动镜像
-docker run -d -it --name mysql -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -v mysql-vol:/var/lib/mysql mysql
+docker run -d -it --name mysql -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -v mysql-vol2:/var/lib/mysql -v /etc/localtime:/etc/localtime mysql
 
 -d:后台启动
 -e:配置MYSQL默认密码
