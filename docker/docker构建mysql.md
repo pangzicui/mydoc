@@ -8,6 +8,7 @@ docker run -d -it --name mysql -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -v mys
 -e:配置MYSQL默认密码
 -p:配置端口映射
 -v:配置数据与宿主机的挂载，在/var/lib/docker/volums/下能看到具体的挂载文件信息
+
 ##修改认证模式
 进入MySQL容器
 
