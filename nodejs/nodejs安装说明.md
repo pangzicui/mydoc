@@ -24,3 +24,7 @@ cnpm install
 ##dev运行
 
 cnpm run dev
+
+##安装webpack
+
+npm install -g webpack
