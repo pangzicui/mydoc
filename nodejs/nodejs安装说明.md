@@ -39,5 +39,3 @@ cnpm install
 ##dev运行
 
 cnpm run dev
-
-111
