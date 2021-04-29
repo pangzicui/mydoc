@@ -18,7 +18,9 @@ server:
 
 ```
 #双向认证
+
 ##生成客户端证书
+
 ```
 keytool -genkeypair -alias client -keypass 123456 -keyalg RSA -storetype PKCS12 -keysize 1024 -validity 365 -keystore d:/https/client.p12 -storepass 123456
 ```
@@ -33,6 +35,7 @@ keytool -genkeypair -alias server -keypass 123456 -keyalg RSA -storetype PKCS12 
 keytool -keystore d:/https/client.p12 -export -alias client -file d:/https/client.cer
 ```
 ##导出服务器公钥
+
 ```
 keytool -keystore d:/https/server.p12 -export -alias server -file d:/https/server.cer
 ```
@@ -42,19 +45,34 @@ keytool -keystore d:/https/server.p12 -export -alias server -file d:/https/serve
 keytool -import -alias client -v -file d:/https/client.cer -keystore d:/https/server.p12 -storepass 123456
 ```
 ##将服务端的密钥导入JDK密钥库
+
 ```
 keytool -import -alias server -file d:/https/server.cer -keystore "C:\Program Files\Java\jdk1.8.0_251\jre\lib\security\cacerts" –v -storepass changeit
 ```
 ##将客户端的密钥导入JDK密钥库
+
 ```
 keytool -import -alias client -file d:/https/client.cer -keystore "C:\Program Files\Java\jdk1.8.0_251\jre\lib\security\cacerts" –v -storepass changeit
 ```
 ##如果需要删除JDK密钥库中的密钥的话，执行以下操作
+
 ```
-keytool -import -alias client -file d:/https/client.cer -keystore "C:\Program Files\Java\jdk1.8.0_251\jre\lib\security\cacerts" –v -storepass changeit
+keytool -delete -alias client -keystore "C:\Program Files\Java\jdk1.8.0_251\jre\lib\security\cacerts" -storepass changeit
 
+keytool -delete -alias server -keystore "C:\Program Files\Java\jdk1.8.0_251\jre\lib\security\cacerts" -storepass changeit
+```
+##Cer转BKS(安卓)
 
-keytool -import -alias server -file d:/https/server.cer -keystore "C:\Program Files\Java\jdk1.8.0_251\jre\lib\security\cacerts" –v -storepass changeit
+```
+keytool -importcert -v -trustcacerts -file d:/https/client.cer -alias client -keystore "d:/https/client.bks" -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath "C:\Program Files\Java\jdk1.8.0_251\jre\lib\ext\bcprov-ext-jdk15on-150.jar" -storetype BKS -storepass 123456
+```
+## Cer转pem
+```
+openssl x509 -inform der -in d:/https/client.cer -out d:/https/client.pem
+```
+##JKS转PEM
+```
+openssl pkcs12 -nodes -in d:/https/client.p12 -out d:/https/client.pem
 ```
 ##配置application.yml
 
