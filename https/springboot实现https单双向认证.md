@@ -44,6 +44,11 @@ keytool -keystore d:/https/server.p12 -export -alias server -file d:/https/serve
 ```
 keytool -import -alias client -v -file d:/https/client.cer -keystore d:/https/server.p12 -storepass 123456
 ```
+##把服务端公钥添加到客户端信任证书库中
+
+```
+keytool -import -alias server -v -file d:/https/server.cer -keystore d:/https/client.p12 -storepass 123456
+```
 ##将服务端的密钥导入JDK密钥库
 
 ```
@@ -61,10 +66,14 @@ keytool -delete -alias client -keystore "C:\Program Files\Java\jdk1.8.0_251\jre\
 
 keytool -delete -alias server -keystore "C:\Program Files\Java\jdk1.8.0_251\jre\lib\security\cacerts" -storepass changeit
 ```
-##Cer转BKS(安卓)
+##生成BKS密钥库(安卓)
 
 ```
-keytool -importcert -v -trustcacerts -file d:/https/client.cer -alias client -keystore "d:/https/client.bks" -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath "C:\Program Files\Java\jdk1.8.0_251\jre\lib\ext\bcprov-ext-jdk15on-150.jar" -storetype BKS -storepass 123456
+keytool -genkey -alias client -keypass 123456 -keyalg RSA -keysize 1024 -validity 365 -keystore d:/https/client.bks -storepass 123456 -storetype BKS -provider org.bouncycastle.jce.provider.BouncyCastleProvider
+```
+##BKS导出crt 公钥
+```
+keytool -keystore d:/https/client.bks -export -alias client -file d:/https/client.crt -storetype BKS -provider org.bouncycastle.jce.provider.BouncyCastleProvider
 ```
 ## Cer转pem
 ```
@@ -73,6 +82,14 @@ openssl x509 -inform der -in d:/https/client.cer -out d:/https/client.pem
 ##JKS转PEM
 ```
 openssl pkcs12 -nodes -in d:/https/client.p12 -out d:/https/client.pem
+```
+##p12转JKS
+```
+keytool -importkeystore -srckeystore d:/https/client.p12 -srcstoretype PKCS12 -deststoretype JKS -destkeystore d:/https/client.jks
+```
+##JKS转CERT
+```
+keytool -exportcert -alias client -file d:/https/client.cert -keystore d:/https/client.jks
 ```
 ##配置application.yml
 
