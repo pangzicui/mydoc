@@ -1,7 +1,7 @@
 # Docker创建Mysql
-##下载镜像
+## 下载镜像
 docker pull mysql
-##启动镜像
+## 启动镜像
 docker run -d -it --name mysql -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -v mysql-vol2:/var/lib/mysql -v /etc/localtime:/etc/localtime mysql
 
 -d:后台启动
@@ -9,7 +9,7 @@ docker run -d -it --name mysql -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -v mys
 -p:配置端口映射
 -v:配置数据与宿主机的挂载，在/var/lib/docker/volums/下能看到具体的挂载文件信息
 
-##修改认证模式
+## 修改认证模式
 进入MySQL容器
 
 docker exec -it mysql /bin/bash

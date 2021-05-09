@@ -1,5 +1,5 @@
 # Docker手册
-#修改镜像地址
+# 修改镜像地址
 ```
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
