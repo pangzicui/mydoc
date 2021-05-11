@@ -63,3 +63,8 @@ keytool -importcert -trustcacerts -alias www.mydomain.com -file d:/https/ssl/ca.
 ```
 keytool -importkeystore -srckeystore d:/https/ssl/client.keystore -srcstoretype pkcs12 -destkeystore d:/https/ssl/client.bks -deststoretype bks -provider org.bouncycastle.jce.provider.BouncyCastleProvider
 ```
+
+## 生成bks的可信列表
+```
+keytool -import -alias ca -file D:/https/ssl/ca.cer -keystore D:/https/ssl/trust.bks -storetype BKS -provider org.bouncycastle.jce.provider.BouncyCastleProvider
+```
